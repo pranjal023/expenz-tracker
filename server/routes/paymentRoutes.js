@@ -18,15 +18,15 @@ router.post("/create-order", async (req, res) => {
       process.env.CASHFREE_API_URL,
       {
         order_id: orderId,
-        order_amount: 199, 
+        order_amount: 199,
         order_currency: "INR",
         customer_details: {
           customer_id: user._id.toString(),
           customer_email: user.email,
-          customer_phone: "9999999999", 
+          customer_phone: "9999999999",
         },
         order_meta: {
-          return_url: `http://localhost:5173/payment-status?order_id={order_id}`,
+          return_url: `${process.env.CLIENT_URL}/payment-status?order_id={order_id}`,
         },
       },
       {
@@ -65,7 +65,7 @@ router.get("/verify/:orderId", async (req, res) => {
       }
     );
 
-    const status = response.data.order_status; 
+    const status = response.data.order_status;
 
     if (status === "PAID") {
       await User.findByIdAndUpdate(req.userId, { isPremium: true });

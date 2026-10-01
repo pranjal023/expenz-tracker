@@ -10,7 +10,10 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://expenz-tracker-ten.vercel.app"],
+  credentials: true,
+}));
 app.use(express.json());
 
 mongoose
